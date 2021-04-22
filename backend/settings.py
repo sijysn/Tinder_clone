@@ -24,7 +24,7 @@ import os
 SECRET_KEY = '^+tub(63whht7$3+t8ktn1&_258mc9+gh@-&&4_i@ysry$ys^1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'tinder-clone3084.herokuapp.com']
 
@@ -126,9 +126,9 @@ DATABASES = {
     }
 }
 
-import dj_database_url
-db_from_env = dj_database_url.config()
-DATABASES['default'].update(db_from_env)
+# import dj_database_url
+# db_from_env = dj_database_url.config()
+# DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -176,17 +176,20 @@ STATICFILES_DIRS = [
 ]
 
 MEDIA_ROOT = BASE_DIR / 'static/images'
-STATIC_ROOT = BASE_DIR / 'staticfiles/images'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 CORS_ALLOW_ALL_ORIGINS = True
 
 AUTH_USER_MODEL = 'base.User'
 
-try:
-    from config.local_settings import *
-except ImportError:
-    pass
+# try:
+#     from config.local_settings import *
+# except ImportError:
+#     pass
 
-if not DEBUG:
-    import django_heroku
-    django_heroku.settings(locals())
+# if not DEBUG:
+#     import django_heroku
+#     django_heroku.settings(locals())
+
+if os.getcwd() == '/app':
+    DEBUG = False
