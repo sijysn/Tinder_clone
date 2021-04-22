@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+import os
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,7 +28,7 @@ SECRET_KEY = '^+tub(63whht7$3+t8ktn1&_258mc9+gh@-&&4_i@ysry$ys^1'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'proshop-demo.herokuapp.com']
 
 
 # Application definition
@@ -44,8 +46,6 @@ INSTALLED_APPS = [
 
     'base.apps.BaseConfig',
 ]
-
-from datetime import timedelta
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
@@ -95,13 +95,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'backend.urls'
 
-import os
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, "frontend/build")
+            os.path.join(BASE_DIR, 'frontend/build')
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -123,8 +121,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'dcrigabdlfev02',
+        'USER': 'jqhgbkcecuirmv',
+        'PASSWORD': 'ba1ba208768565ff4b31042b899ca537171670e1f704a89d665f048679f22e39',
+        'HOST': 'ec2-54-87-112-29.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
