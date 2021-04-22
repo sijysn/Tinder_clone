@@ -15,7 +15,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-import os
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -93,6 +93,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'backend.urls'
+
+import os
 
 TEMPLATES = [
     {
@@ -182,12 +184,12 @@ CORS_ALLOW_ALL_ORIGINS = True
 AUTH_USER_MODEL = 'base.User'
 
 try:
-    from config.local_settings import *
+    from backend.local_settings import *
 except ImportError:
     pass
 
 if not DEBUG:
-    # SECRET_KEY = os.environ['SECRET_KEY']
+    SECRET_KEY = os.environ['SECRET_KEY']
     import django_heroku
     django_heroku.settings(locals())
 
