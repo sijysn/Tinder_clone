@@ -36,7 +36,7 @@ function GoldHomeScreen({ history }) {
       {loading ? (
         <Loader />
       ) : error ? (
-        <Alert severity="error">{message}</Alert>
+        <Alert severity="error">{error}</Alert>
       ) : (
         likes && (
           <Box
