@@ -24,9 +24,9 @@ import os
 SECRET_KEY = '^+tub(63whht7$3+t8ktn1&_258mc9+gh@-&&4_i@ysry$ys^1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'tinder-clone3084.herokuapp.com']
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "tinder-clone3084.herokuapp.com"]
 
 
 # Application definition
@@ -182,14 +182,14 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 AUTH_USER_MODEL = 'base.User'
 
-# try:
-#     from config.local_settings import *
-# except ImportError:
-#     pass
+try:
+    from config.local_settings import *
+except ImportError:
+    pass
 
-# if not DEBUG:
-#     import django_heroku
-#     django_heroku.settings(locals())
+if not DEBUG:
+    import django_heroku
+    django_heroku.settings(locals())
 
-if os.getcwd() == '/app':
-    DEBUG = False
+# if os.getcwd() == '/app':
+#     DEBUG = False
