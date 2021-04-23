@@ -10,7 +10,7 @@ function Like({ image }) {
     <Card style={{ width: "100%", borderRadius: "10px" }}>
       <CardActionArea style={{ position: "relative" }}>
         <CardMedia
-          image={image ? image : "/images/unknown.png"}
+          image={image ? image : "unknown_ffqtxf"}
           style={{ width: "100%", height: "60vw", filter: "blur(10px)" }}
           title="Profile Photo"
         ></CardMedia>

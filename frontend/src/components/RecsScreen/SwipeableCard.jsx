@@ -237,7 +237,7 @@ const SwipeableCard = ({ person, className, cardIsEmpty }) => {
   return (
     <Card className={className} id={person.id}>
       <CardMedia
-        image={person.image ? person.image : "/images/unknown.png"}
+        image={person.image ? person.image : "unknown_ffqtxf"}
         className={classes.cardImage}
         title="profile photo"
       />
