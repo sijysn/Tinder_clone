@@ -87,7 +87,7 @@ function MessageScreen({ match, history }) {
 
         setLoading(false);
       }
-    }, 1000);
+    }, 5000);
 
     return () => (isMounted = false);
   }, []);
