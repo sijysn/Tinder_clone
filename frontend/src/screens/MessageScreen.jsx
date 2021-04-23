@@ -127,9 +127,7 @@ function MessageScreen({ match, history }) {
                     <Box display="flex" justifyContent="flex-start" mr={5}>
                       <Avatar
                         src={
-                          chatUserInfo
-                            ? chatUserInfo.image
-                            : "/images/unknown.png"
+                          chatUserInfo ? chatUserInfo.image : "unknown_ffqtxf"
                         }
                         alt="Profile Photo"
                         style={{

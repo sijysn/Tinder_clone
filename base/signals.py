@@ -7,7 +7,7 @@ def updateUser(sender, instance, **kwarg):
     user.username = user.email
   
   if user.image == '':
-    user.image = '/unknown.png'
+    user.image = 'unknown_ffqtxf'
 
 # Before each saving User table, Call updateUser function
 pre_save.connect(updateUser, sender=User)

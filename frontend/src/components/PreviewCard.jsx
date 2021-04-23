@@ -36,7 +36,7 @@ function PreviewCard({ person, className }) {
   return (
     <Card className={className}>
       <CardMedia
-        image={person.image ? person.image : "/images/unknown.png"}
+        image={person.image ? person.image : "unknown_ffqtxf"}
         className={classes.cardImage}
         title="profile photo"
       />

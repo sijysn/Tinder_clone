@@ -17,7 +17,7 @@ import Loader from "../components/Loader";
 import { USER_DETAILS_SUCCESS } from "../constants/userConstants";
 
 function ProfilePhotoUploader() {
-  const [image, setImage] = useState("/images/unknown.png");
+  const [image, setImage] = useState("unknown_ffqtxf");
   const [message, setMessage] = useState();
   const [uploading, setUploading] = useState(false);
 
@@ -73,7 +73,7 @@ function ProfilePhotoUploader() {
         <Loader />
       ) : (
         <CardMedia
-          image={image ? image : "/images/unknown.png"}
+          image={image ? image : "unknown_ffqtxf"}
           title="Profile Photo"
           style={{
             position: "relative",
