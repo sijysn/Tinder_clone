@@ -29,23 +29,33 @@ function LatestMessages({ history }) {
   }, [history, userInfo]);
 
   useEffect(() => {
-    setLoading(true);
-
     let isMounted = true;
 
-    setInterval(async () => {
+    setLoading(true);
+
+    const checkMessage = async () => {
+      const { data } = await axios.get(
+        `/api/messages/latest/${userInfo.id}/`,
+        config
+      );
+
+      setLatestMessagesList(data);
+    };
+
+    const repeat = () => {
       if (isMounted) {
-        const { data } = await axios.get(
-          `/api/messages/latest/${userInfo.id}/`,
-          config
-        );
-
-        setLatestMessagesList(data);
-        setLoading(false);
+        checkMessage();
+        setTimeout(repeat, 5000);
       }
-    }, 1000);
+    };
 
-    return () => (isMounted = false);
+    repeat();
+
+    setLoading(false);
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (

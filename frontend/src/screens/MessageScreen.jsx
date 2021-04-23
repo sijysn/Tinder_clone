@@ -63,31 +63,38 @@ function MessageScreen({ match, history }) {
   }, [history, userInfo, chatUserInfo]);
 
   useEffect(() => {
-    setLoading(true);
-
     let isMounted = true;
 
-    setInterval(async () => {
+    setLoading(true);
+
+    const checkMessage = async () => {
+      const _messages = await axios.get(
+        `/api/messages/${userInfo.id}/${chatUserId}`,
+        config
+      );
+
+      setMessages(_messages.data);
+
+      await axios.put(
+        "/api/messages/read/",
+        {
+          messages: JSON.stringify(_messages.data),
+          fromUserId: userInfo.id,
+        },
+        config
+      );
+    };
+
+    const repeat = () => {
       if (isMounted) {
-        const _messages = await axios.get(
-          `/api/messages/${userInfo.id}/${chatUserId}`,
-          config
-        );
-
-        setMessages(_messages.data);
-
-        await axios.put(
-          "/api/messages/read/",
-          {
-            messages: JSON.stringify(_messages.data),
-            fromUserId: userInfo.id,
-          },
-          config
-        );
-
-        setLoading(false);
+        checkMessage();
+        setTimeout(repeat, 5000);
       }
-    }, 5000);
+    };
+
+    repeat();
+
+    setLoading(false);
 
     return () => (isMounted = false);
   }, []);
