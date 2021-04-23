@@ -41,7 +41,7 @@ function PreviewCard({ person, className }) {
         title="profile photo"
       />
 
-      <CardActionArea onClick={readMore} href="#self-introduction">
+      <CardActionArea onClick={readMore}>
         <CardContent className={classes.cardContent}>
           <Typography component="h1" variant="h3" gutterBottom>
             <strong>{person.first_name}</strong>{" "}
