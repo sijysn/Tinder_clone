@@ -93,7 +93,7 @@ def registerUser(request):
       password=make_password(data['password']),
       gender_identity=data['genderIdentity'],
       birth_date=data['birthDate'],
-      image='https://res.cloudinary.com/dfw3mlaic/image/upload/v1/images/unknown_ffqtxf',
+      image='unknown_ffqtxf',
     )
     serializer = UserProfileSerializerWithToken(user, many=False)
     return Response(serializer.data)
