@@ -23,9 +23,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = '^+tub(63whht7$3+t8ktn1&_258mc9+gh@-&&4_i@ysry$ys^1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'tinder-clone3084.herokuapp.com']
 
@@ -185,17 +186,20 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 AUTH_USER_MODEL = 'base.User'
 
-try:
-    from .local_settings import *
-except ImportError:
-    pass
+# try:
+#     from .local_settings import *
+# except ImportError:
+#     pass
 
-if not DEBUG:
-    SECRET_KEY = os.environ['SECRET_KEY']
-    import django_heroku
-    django_heroku.settings(locals(), staticfiles=False)
+# if not DEBUG:
+#     SECRET_KEY = os.environ['SECRET_KEY']
+#     import django_heroku
+#     django_heroku.settings(locals(), staticfiles=False)
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
+if os.getcwd() == '/app':
+    DEBUG = False
 
 LOGGING = {
     'version': 1,
