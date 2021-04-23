@@ -14,6 +14,10 @@ import os
 from datetime import timedelta
 from pathlib import Path
 
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -45,6 +49,9 @@ INSTALLED_APPS = [
     'corsheaders',
 
     'base.apps.BaseConfig',
+
+    'cloudinary',
+    'cloudinary_storage',
 ]
 
 SIMPLE_JWT = {
@@ -200,6 +207,14 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 if os.getcwd() == '/app':
     DEBUG = False
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dfw3mlaic',
+    'API_KEY': '446273387812815',
+    'API_SECRET': 'ahdGRCjp5wXWXnPBODxEWOP-jU8'
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 LOGGING = {
     'version': 1,
