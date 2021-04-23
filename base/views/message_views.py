@@ -35,7 +35,7 @@ def getMessages(request, user1_id, user2_id):
     chat_room = ChatRoom.objects.get(id=target_chat_room_id)
     messages = Message.objects.filter(chat_room_id=chat_room)
     serializer = MessageSerializer(messages, many=True)
-    return Response(serializer.data)
+    return Response(sorted(serializer.data, key=lambda x: x['sent_at']))
 
   else:
     return Response([])
