@@ -36,7 +36,11 @@ function PreviewCard({ person, className }) {
   return (
     <Card className={className}>
       <CardMedia
-        image={person.image ? person.image : "unknown_ffqtxf"}
+        image={
+          person.image
+            ? person.image
+            : "https://res.cloudinary.com/dfw3mlaic/image/upload/v1/images/unknown_ffqtxf"
+        }
         className={classes.cardImage}
         title="profile photo"
       />
