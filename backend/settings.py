@@ -179,7 +179,7 @@ STATICFILES_DIRS = [
 ]
 
 MEDIA_ROOT = BASE_DIR / 'static/images'
-STATIC_ROOT = BASE_DIR /'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 CORS_ALLOW_ALL_ORIGINS = True
 
@@ -193,7 +193,7 @@ except ImportError:
 if not DEBUG:
     SECRET_KEY = os.environ['SECRET_KEY']
     import django_heroku
-    django_heroku.settings(locals())
+    django_heroku.settings(locals(), staticfiles=False)
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
