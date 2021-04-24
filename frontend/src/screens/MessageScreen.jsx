@@ -89,12 +89,11 @@ function MessageScreen() {
 
     const repeat = () => {
       checkMessage();
+      setLoading(false);
       if (isMounted) setTimeout(repeat, 5000);
     };
 
     repeat();
-
-    setLoading(false);
 
     return () => (isMounted = false);
   }, []);
@@ -160,11 +159,11 @@ function MessageScreen() {
                           <FavoriteIcon
                             onClick={() => goodHandler(message)}
                             style={{ color: "#f50057" }}
-                          ></FavoriteIcon>
+                          />
                         ) : (
                           <FavoriteBorderIcon
                             onClick={() => goodHandler(message)}
-                          ></FavoriteBorderIcon>
+                          />
                         )}
                       </Box>
                     </Box>
@@ -174,7 +173,7 @@ function MessageScreen() {
                         <FavoriteIcon
                           fontSize="small"
                           style={{ color: "#f50057" }}
-                        ></FavoriteIcon>
+                        />
                       )}
                       <MessageBubble
                         bgColor="#46b3e6"

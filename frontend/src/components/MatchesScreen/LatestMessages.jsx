@@ -37,15 +37,12 @@ function LatestMessages() {
     };
 
     const repeat = () => {
-      if (isMounted) {
-        checkMessage();
-        setTimeout(repeat, 5000);
-      }
+      checkMessage();
+      setLoading(false);
+      if (isMounted) setTimeout(repeat, 5000);
     };
 
     repeat();
-
-    setLoading(false);
 
     return () => {
       isMounted = false;
