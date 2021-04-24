@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
 
 import Container from "@material-ui/core/Container";
 import ScopedCssBaseline from "@material-ui/core/ScopedCssBaseline";
@@ -24,7 +24,9 @@ import calcAge from "../functions/calcAge";
 
 import { getUserDetails } from "../actions/userActions";
 
-function ProfileScreen({ history }) {
+function ProfileScreen() {
+  const history = useHistory();
+
   const [age, setAge] = useState("");
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -56,7 +58,7 @@ function ProfileScreen({ history }) {
   }, [history, userInfo, user]);
 
   return (
-    <Box component="div">
+    <Box>
       <CommonHeader profile />
 
       {loading ? (
@@ -67,7 +69,7 @@ function ProfileScreen({ history }) {
         user && (
           <ScopedCssBaseline>
             <Container maxWidth="sm">
-              <Box component="div" textAlign="center" mt={10} mb={5}>
+              <Box textAlign="center" mt={10} mb={5}>
                 <Link to="/profile/preview">
                   <IconButton>
                     <Avatar
@@ -85,7 +87,7 @@ function ProfileScreen({ history }) {
                 </Typography>
               </Box>
 
-              <Box component="div" textAlign="center">
+              <Box textAlign="center">
                 <Grid container alignItems="center">
                   <Grid item xs={4}>
                     <ProfileButton to="/settings" title="SETTINGS">

@@ -8,7 +8,7 @@ import Box from "@material-ui/core/Box";
 import LatestMessage from "./LatestMessage";
 import Loader from "../Loader";
 
-function LatestMessages({ history }) {
+function LatestMessages() {
   const [latestMessagesList, setLatestMessagesList] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -21,12 +21,6 @@ function LatestMessages({ history }) {
       Authorization: `Bearer ${userInfo.token}`,
     },
   };
-
-  useEffect(async () => {
-    if (!userInfo) {
-      history.push("/login");
-    }
-  }, [history, userInfo]);
 
   useEffect(() => {
     let isMounted = true;

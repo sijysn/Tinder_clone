@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
+import Box from "@material-ui/core/Box";
 import Alert from "@material-ui/lab/Alert";
 
 import SwipeableCard from "./SwipeableCard";
@@ -28,14 +29,14 @@ const SwipeableCards = ({ cardIsEmpty }) => {
   }, [cards, cardIsEmpty]);
 
   return (
-    <div>
+    <Box>
       {loading ? (
         <Empty />
       ) : error ? (
         <Alert severity="error">{error}</Alert>
       ) : (
         cards && (
-          <div className="cards">
+          <Box className="cards">
             {cards.map((person) => (
               <SwipeableCard
                 person={person}
@@ -44,10 +45,10 @@ const SwipeableCards = ({ cardIsEmpty }) => {
                 cardIsEmpty={cardIsEmpty}
               />
             ))}
-          </div>
+          </Box>
         )
       )}
-    </div>
+    </Box>
   );
 };
 

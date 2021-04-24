@@ -103,7 +103,7 @@ def sendMessage(request):
     # Fetch all messages
     messages = Message.objects.filter(chat_room_id=chat_room)
     serializer = MessageSerializer(messages, many=True)
-    return Response(serializer.data)
+    return Response(sorted(serializer.data, key=lambda x: x['sent_at']))
 
   else:
     return Response([])
@@ -137,9 +137,10 @@ def readMessages(request):
       message_id = message['id']
       message = Message.objects.get(id=message_id)
       if message.user_id != user:
-        message.read = True
-        message.save()
-        read_messages.append(message)
+        if message.read == False:
+          message.read = True
+          message.save()
+          read_messages.append(message)
 
   serializer = MessageSerializer(read_messages, many=True)
   return Response(serializer.data)

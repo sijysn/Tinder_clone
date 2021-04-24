@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function NewMatches({ history }) {
+function NewMatches() {
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 
@@ -45,13 +45,11 @@ function NewMatches({ history }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!userInfo) {
-      history.push("/login");
-    } else {
+    if (userInfo) {
       dispatch(getLikesList());
       dispatch(getNewMatchesList());
     }
-  }, [dispatch, history, userInfo]);
+  }, [dispatch, userInfo]);
 
   const classes = useStyles();
 

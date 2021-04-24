@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import axios from "axios";
@@ -10,8 +11,9 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import SettingsHeader from "../components/SettingsHeader";
 import PreviewCard from "../components/PreviewCard";
 
-function MessageProfilePreviewScreen({ history, match }) {
-  const id = match.params.id;
+function MessageProfilePreviewScreen() {
+  const history = useHistory();
+  const { id } = useParams();
 
   const [chatUserInfo, setChatUserInfo] = useState();
 

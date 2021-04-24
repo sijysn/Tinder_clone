@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import Box from "@material-ui/core/Box";
@@ -9,9 +10,11 @@ import CommonHeader from "../components/CommonHeader";
 import NewMatches from "../components/MatchesScreen/NewMatches";
 import LatestMessages from "../components/MatchesScreen/LatestMessages";
 
-import { useStyles } from "../styles";
+import { useStyles } from "../styles/styles.js";
 
-function MatchesScreen({ history }) {
+function MatchesScreen() {
+  const history = useHistory();
+
   const classes = useStyles();
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -33,6 +36,7 @@ function MatchesScreen({ history }) {
             <Typography component="h1" variant="h5" paragraph>
               <strong>New Matches</strong>
             </Typography>
+
             <NewMatches />
           </Box>
 
@@ -40,6 +44,7 @@ function MatchesScreen({ history }) {
             <Typography component="h1" variant="h5" gutterBottom>
               <strong>Messages</strong>
             </Typography>
+
             <LatestMessages />
           </Box>
         </ScopedCssBaseline>

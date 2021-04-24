@@ -14,7 +14,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 
-import { useStyles } from "../../styles";
+import { useStyles } from "../../styles/styles.js";
 
 import calcAge from "../../functions/calcAge";
 import createChatRoom from "../../functions/createChatRoom";
@@ -267,7 +267,7 @@ const SwipeableCard = ({ person, className, cardIsEmpty }) => {
             </Grid>
 
             <Grid item xs={6}>
-              <Box component="div" textAlign="right">
+              <Box textAlign="right">
                 {selfIntroIsDisplayed ? (
                   <IconButton
                     style={{

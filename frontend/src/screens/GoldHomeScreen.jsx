@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import Box from "@material-ui/core/Box";
@@ -12,7 +13,9 @@ import Loader from "../components/Loader";
 
 import { getLikesList } from "../actions/userActions";
 
-function GoldHomeScreen({ history }) {
+function GoldHomeScreen() {
+  const history = useHistory();
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 

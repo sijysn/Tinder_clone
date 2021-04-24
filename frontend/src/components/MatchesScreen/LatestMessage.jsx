@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function LatestMessage({ history, item }) {
+function LatestMessage({ item }) {
   const classes = useStyles();
 
   const [chatUserInfo, setChatUserInfo] = useState();
@@ -36,9 +36,7 @@ function LatestMessage({ history, item }) {
   };
 
   useEffect(async () => {
-    if (!userInfo) {
-      history.push("/login");
-    } else {
+    if (userInfo) {
       if (item.user_id == userInfo.id) {
         const { data } = await axios.get(
           `/api/users/chatuser/${userInfo.id}/${item.chat_room_id}/`,
@@ -55,7 +53,7 @@ function LatestMessage({ history, item }) {
         setChatUserInfo(data);
       }
     }
-  }, [history, userInfo]);
+  }, [userInfo]);
 
   return chatUserInfo ? (
     <HashLink to={`/messages/${chatUserInfo.id}#latest_message`}>

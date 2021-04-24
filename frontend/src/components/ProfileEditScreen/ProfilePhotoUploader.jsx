@@ -12,9 +12,9 @@ import IconButton from "@material-ui/core/IconButton";
 import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import Alert from "@material-ui/lab/Alert";
 
-import Loader from "../components/Loader";
+import Loader from "../Loader";
 
-import { USER_DETAILS_SUCCESS } from "../constants/userConstants";
+import { USER_DETAILS_SUCCESS } from "../../constants/userConstants";
 
 function ProfilePhotoUploader() {
   const [image, setImage] = useState("unknown_ffqtxf");

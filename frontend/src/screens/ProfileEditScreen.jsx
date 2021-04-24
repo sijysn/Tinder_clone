@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import Container from "@material-ui/core/Container";
@@ -11,7 +12,7 @@ import Alert from "@material-ui/lab/Alert";
 
 import Loader from "../components/Loader";
 import SettingsHeader from "../components/SettingsHeader";
-import ProfilePhotoUploader from "../components/ProfilePhotoUploader";
+import ProfilePhotoUploader from "../components/ProfileEditScreen/ProfilePhotoUploader";
 
 import {
   updateUserDetails,
@@ -26,9 +27,11 @@ import {
   sexualPreferences,
 } from "../constants/genderConstants";
 
-import { useStyles } from "../styles";
+import { useStyles } from "../styles/styles.js";
 
-function ProfileEditScreen({ history }) {
+function ProfileEditScreen() {
+  const history = useHistory();
+
   const classes = useStyles();
 
   const [profession, setProfession] = useState("");
@@ -82,12 +85,13 @@ function ProfileEditScreen({ history }) {
   }, [dispatch, history, userInfo, user, success]);
 
   return (
-    <div>
+    <Box>
       <SettingsHeader title="EDITINGS" backTo="/profile" />
 
       <Box mt={1}>
         <Container maxWidth="xs">
           <CssBaseline />
+
           {loading ? (
             <Loader />
           ) : error ? (
@@ -180,7 +184,7 @@ function ProfileEditScreen({ history }) {
           )}
         </Container>
       </Box>
-    </div>
+    </Box>
   );
 }
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import Box from "@material-ui/core/Box";
@@ -17,9 +17,11 @@ import Loader from "../components/Loader";
 
 import { login } from "../actions/userActions";
 
-import { useStyles } from "../styles";
+import { useStyles } from "../styles/styles.js";
 
-export default function LoginScreen({ location, history }) {
+export default function LoginScreen() {
+  const history = useHistory();
+  const location = useLocation();
   const classes = useStyles();
 
   const [email, setEmail] = useState("");
@@ -44,9 +46,9 @@ export default function LoginScreen({ location, history }) {
   }, [history, userInfo, redirect]);
 
   return (
-    <Container component="div" maxWidth="xs">
+    <Container maxWidth="xs">
       <CssBaseline />
-      <div className={classes.paper}>
+      <Box className={classes.paper}>
         <img
           src="https://cdn.worldvectorlogo.com/logos/tinder-2.svg"
           style={{
@@ -120,7 +122,7 @@ export default function LoginScreen({ location, history }) {
             </Grid>
           </Grid>
         </form>
-      </div>
+      </Box>
     </Container>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import Box from "@material-ui/core/Box";
@@ -22,9 +22,12 @@ import calcAge from "../functions/calcAge";
 
 import { register } from "../actions/userActions";
 
-import { useStyles } from "../styles";
+import { useStyles } from "../styles/styles.js";
 
-export default function RegisterScreen({ location, history }) {
+export default function RegisterScreen() {
+  const history = useHistory();
+  const location = useLocation();
+
   const classes = useStyles();
 
   const [name, setName] = useState("");
@@ -63,7 +66,7 @@ export default function RegisterScreen({ location, history }) {
   }, [history, userInfo, redirect]);
 
   return (
-    <Container component="div" maxWidth="xs" className={classes.registerScreen}>
+    <Container maxWidth="xs" className={classes.registerScreen}>
       <CssBaseline />
       <Box mt={2} textAlign="center">
         <img

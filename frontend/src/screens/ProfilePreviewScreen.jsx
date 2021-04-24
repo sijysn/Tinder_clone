@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import Box from "@material-ui/core/Box";
@@ -13,7 +14,9 @@ import PreviewCard from "../components/PreviewCard";
 
 import { getUserDetails } from "../actions/userActions";
 
-function ProfilePreviewScreen({ history }) {
+function ProfilePreviewScreen() {
+  const history = useHistory();
+
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
 

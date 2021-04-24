@@ -1,17 +1,17 @@
 import React from "react";
 import { HashRouter as Router, Route } from "react-router-dom";
 
-import RegisterScreen from "./screens/RegisterScreen";
-import LoginScreen from "./screens/LoginScreen";
-import RecsScreen from "./screens/RecsScreen";
-import GoldHomeScreen from "./screens/GoldHomeScreen";
-import MatchesScreen from "./screens/MatchesScreen";
-import MessageScreen from "./screens/MessageScreen";
-import MessageProfilePreviewScreen from "./screens/MessageProfilePreviewScreen";
-import ProfileScreen from "./screens/ProfileScreen";
-import ProfilePreviewScreen from "./screens/ProfilePreviewScreen";
-import ProfileEditScreen from "./screens/ProfileEditScreen";
-import SettingsScreen from "./screens/SettingsScreen";
+import RegisterScreen from "../screens/RegisterScreen";
+import LoginScreen from "../screens/LoginScreen";
+import RecsScreen from "../screens/RecsScreen";
+import GoldHomeScreen from "../screens/GoldHomeScreen";
+import MatchesScreen from "../screens/MatchesScreen";
+import MessageScreen from "../screens/MessageScreen";
+import MessageProfilePreviewScreen from "../screens/MessageProfilePreviewScreen";
+import ProfileScreen from "../screens/ProfileScreen";
+import ProfilePreviewScreen from "../screens/ProfilePreviewScreen";
+import ProfileEditScreen from "../screens/ProfileEditScreen";
+import SettingsScreen from "../screens/SettingsScreen";
 
 const App = () => {
   return (

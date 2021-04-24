@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import Box from "@material-ui/core/Box";
 import PersonIcon from "@material-ui/icons/Person";
 import ForumIcon from "@material-ui/icons/Forum";
 import StarIcon from "@material-ui/icons/Star";
@@ -8,8 +9,8 @@ import IconButton from "@material-ui/core/IconButton";
 
 const CommonHeader = ({ recs, goldHome, matches, profile }) => {
   return (
-    <div className="common-header">
-      <div className="common-header__icons-container max-width">
+    <Box className="common-header">
+      <Box className="common-header__icons-container max-width">
         <Link to="/recs">
           <IconButton disabled className="common-header__icon">
             <img
@@ -47,8 +48,8 @@ const CommonHeader = ({ recs, goldHome, matches, profile }) => {
             />
           </IconButton>
         </Link>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

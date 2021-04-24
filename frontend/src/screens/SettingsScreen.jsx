@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
+import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Button from "@material-ui/core/Button";
@@ -18,9 +20,11 @@ import {
 
 import { USER_PROFILE_UPDATE_RESET } from "../constants/userConstants";
 
-import { useStyles } from "../styles";
+import { useStyles } from "../styles/styles.js";
 
-function SettingsScreen({ history }) {
+function SettingsScreen() {
+  const history = useHistory();
+
   const classes = useStyles();
 
   const [name, setName] = useState("");
@@ -62,7 +66,7 @@ function SettingsScreen({ history }) {
   }, [dispatch, history, userInfo, success]);
 
   return (
-    <div>
+    <Box>
       <SettingsHeader title="SETTINGS" backTo="/profile" />
 
       <Container className={classes.paper} maxWidth="xs">
@@ -148,7 +152,7 @@ function SettingsScreen({ history }) {
           </Button>
         </form>
       </Container>
-    </div>
+    </Box>
   );
 }
 
