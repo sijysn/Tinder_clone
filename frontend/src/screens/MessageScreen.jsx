@@ -104,100 +104,98 @@ function MessageScreen() {
       {loading ? (
         <Loader style={{ marginTop: "50vh" }} />
       ) : (
-        messages && (
-          <Box>
-            <MessageHeader chatUserInfo={chatUserInfo && chatUserInfo} />
+        <Box>
+          <MessageHeader chatUserInfo={chatUserInfo && chatUserInfo} />
 
-            <Grid
-              container
-              direction="column"
-              spacing={1}
-              style={{
-                overflowY: "scroll",
-                maxHeight: "100vh",
-                padding: "9rem 1rem 20rem",
-                flexWrap: "nowrap",
-                zIndex: "-1",
-              }}
-              className="max-width"
-            >
-              {messages.length > 0 &&
-                messages.map((message) => (
-                  <Grid
-                    item
-                    key={message.id}
-                    style={{
-                      position: "relative",
-                      width: "100%",
-                    }}
-                  >
-                    {message.user_id == chatUserId ? (
-                      <Box display="flex" justifyContent="flex-start" mr={5}>
-                        <Avatar
-                          src={
-                            chatUserInfo ? chatUserInfo.image : "unknown_ffqtxf"
-                          }
-                          alt="Profile Photo"
-                          style={{
-                            height: "3rem",
-                            width: "3rem",
-                            marginRight: "1rem",
-                          }}
-                        ></Avatar>
+          <Grid
+            container
+            direction="column"
+            spacing={1}
+            style={{
+              overflowY: "scroll",
+              maxHeight: "100vh",
+              padding: "9rem 1rem 20rem",
+              flexWrap: "nowrap",
+              zIndex: "-1",
+            }}
+            className="max-width"
+          >
+            {messages.length > 0 &&
+              messages.map((message) => (
+                <Grid
+                  item
+                  key={message.id}
+                  style={{
+                    position: "relative",
+                    width: "100%",
+                  }}
+                >
+                  {message.user_id == chatUserId ? (
+                    <Box display="flex" justifyContent="flex-start" mr={5}>
+                      <Avatar
+                        src={
+                          chatUserInfo ? chatUserInfo.image : "unknown_ffqtxf"
+                        }
+                        alt="Profile Photo"
+                        style={{
+                          height: "3rem",
+                          width: "3rem",
+                          marginRight: "1rem",
+                        }}
+                      ></Avatar>
 
-                        <MessageBubble
-                          bgColor="#dddddd"
-                          color="#000"
-                          text={message.text}
-                        />
+                      <MessageBubble
+                        bgColor="#dddddd"
+                        color="#000"
+                        text={message.text}
+                      />
 
-                        <Box
-                          position="absolute"
-                          right="1rem"
-                          top="50%"
-                          style={{ transform: "translateY(-50%)" }}
-                        >
-                          {message.good ? (
-                            <FavoriteIcon
-                              onClick={() => goodHandler(message)}
-                              style={{ color: "#f50057" }}
-                            ></FavoriteIcon>
-                          ) : (
-                            <FavoriteBorderIcon
-                              onClick={() => goodHandler(message)}
-                            ></FavoriteBorderIcon>
-                          )}
-                        </Box>
-                      </Box>
-                    ) : (
-                      <Box display="flex" justifyContent="flex-end" ml={5}>
-                        {message.good && (
+                      <Box
+                        position="absolute"
+                        right="1rem"
+                        top="50%"
+                        style={{ transform: "translateY(-50%)" }}
+                      >
+                        {message.good ? (
                           <FavoriteIcon
-                            fontSize="small"
+                            onClick={() => goodHandler(message)}
                             style={{ color: "#f50057" }}
                           ></FavoriteIcon>
+                        ) : (
+                          <FavoriteBorderIcon
+                            onClick={() => goodHandler(message)}
+                          ></FavoriteBorderIcon>
                         )}
-                        <MessageBubble
-                          bgColor="#46b3e6"
-                          color="#fff"
-                          text={message.text}
-                        />
                       </Box>
-                    )}
-                  </Grid>
-                ))}
-              {messages.length === 0 && (
-                <Box>
-                  <Box height="100vh"></Box>
-                </Box>
-              )}
-              <Box id="latest_message" visibility="hidden">
-                latest message
+                    </Box>
+                  ) : (
+                    <Box display="flex" justifyContent="flex-end" ml={5}>
+                      {message.good && (
+                        <FavoriteIcon
+                          fontSize="small"
+                          style={{ color: "#f50057" }}
+                        ></FavoriteIcon>
+                      )}
+                      <MessageBubble
+                        bgColor="#46b3e6"
+                        color="#fff"
+                        text={message.text}
+                      />
+                    </Box>
+                  )}
+                </Grid>
+              ))}
+            {messages.length === 0 && (
+              <Box>
+                <Box height="100vh"></Box>
               </Box>
-            </Grid>
-            <MessageFooter chatUserId={chatUserId} setMessages={setMessages} />
-          </Box>
-        )
+            )}
+            <Box id="latest_message" visibility="hidden">
+              latest message
+            </Box>
+          </Grid>
+          <MessageFooter chatUserId={chatUserId} setMessages={setMessages} />
+        </Box>
       )}
     </Box>
   );
