@@ -14,6 +14,9 @@ import ProfileEditScreen from "../screens/ProfileEditScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 
 const App = () => {
+  // user info を local strage(ある場合)からstateに保存
+  // stateのUserInfoがない場合、/login
+
   return (
     <Router>
       <Route exact path="/" component={LoginScreen} />

@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import axios from "axios";
-
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
 import Avatar from "@material-ui/core/Avatar";
@@ -14,6 +12,11 @@ import MessageHeader from "../components/MessageScreen/MessageHeader";
 import MessageFooter from "../components/MessageScreen/MessageFooter";
 import MessageBubble from "../components/MessageScreen/MessageBubble";
 import Loader from "../components/Loader";
+
+import getChatUserInfoBy from "../repositories/getChatUserInfoBy";
+import taggleLikeMessageBy from "../repositories/taggleLikeMessageBy";
+import getMessagesBy from "../repositories/getMessagesBy";
+import readMessageBy from "../repositories/readMessageBy";
 
 function MessageScreen() {
   const history = useHistory();
@@ -35,68 +38,51 @@ function MessageScreen() {
   };
 
   const goodHandler = async (message) => {
-    const targetMessage = await axios.put(
-      `/api/messages/good/update/${message.id}/`,
-      {},
-      config
-    );
+    const targetMessage = await taggleLikeMessageBy(message.id, userInfo);
 
-    if (targetMessage) {
-      const _messages = await axios.get(
-        `/api/messages/${userInfo.id}/${chatUserId}/`,
-        config
-      );
+    if (!targetMessage) return;
 
-      setMessages(_messages.data);
-    }
+    const _messages = await getMessagesBy(userInfo, chatUserId);
+
+    setMessages(_messages.data);
   };
 
   useEffect(async () => {
-    if (!userInfo) {
-      history.push("/login");
-    } else if (!chatUserInfo) {
-      const { data } = await axios.get(
-        `/api/users/cards/id/${chatUserId}/`,
-        config
-      );
+    // TODO Routerでやる。
+    if (!userInfo) history.push("/login");
 
-      setChatUserInfo(data);
-    }
+    if (!chatUserInfo)
+      setChatUserInfo(await getChatUserInfoBy(userInfo, chatUserId));
+
+    const _messages = await getMessagesBy(userInfo, chatUserId);
+
+    setMessages(_messages.data);
+    readMessageBy(_messages.data, userInfo);
   }, [history, userInfo, chatUserInfo]);
 
-  useEffect(() => {
-    let isMounted = true;
+  // useEffect(() => {
+  //   let isMounted = true;
 
-    setLoading(true);
+  //   setLoading(true);
 
-    const checkMessage = async () => {
-      const _messages = await axios.get(
-        `/api/messages/${userInfo.id}/${chatUserId}`,
-        config
-      );
+  //   const checkMessage = async () => {
+  //     const _messages = await getMessagesBy(userInfo.id, chatUserId);
 
-      setMessages(_messages.data);
+  //     setMessages(_messages.data);
 
-      await axios.put(
-        "/api/messages/read/",
-        {
-          messages: JSON.stringify(_messages.data),
-          fromUserId: userInfo.id,
-        },
-        config
-      );
-    };
+  //     readMessageBy(_messages.data, userInfo);
+  //   };
 
-    const repeat = () => {
-      checkMessage();
-      setLoading(false);
-      if (isMounted) setTimeout(repeat, 5000);
-    };
+  //   const repeat = () => {
+  //     checkMessage();
+  //     setLoading(false);
+  //     if (isMounted) setTimeout(repeat, 5000);
+  //   };
 
-    repeat();
+  //   repeat();
 
-    return () => (isMounted = false);
-  }, []);
+  //   return () => (isMounted = false);
+  // }, []);
 
   return (
     <Box>

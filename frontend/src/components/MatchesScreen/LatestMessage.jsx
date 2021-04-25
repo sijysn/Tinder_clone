@@ -36,23 +36,16 @@ function LatestMessage({ item }) {
   };
 
   useEffect(async () => {
-    if (userInfo) {
-      if (item.user_id == userInfo.id) {
-        const { data } = await axios.get(
-          `/api/users/chatuser/${userInfo.id}/${item.chat_room_id}/`,
-          config
-        );
+    if (!userInfo) return;
 
-        setChatUserInfo(data);
-      } else {
-        const { data } = await axios.get(
-          `/api/users/cards/id/${item.user_id}/`,
-          config
-        );
+    const { data } = await axios.get(
+      item.user_id == userInfo.id
+        ? `/api/users/chatuser/${userInfo.id}/${item.chat_room_id}/`
+        : `/api/users/cards/id/${item.user_id}/`,
+      config
+    );
 
-        setChatUserInfo(data);
-      }
-    }
+    setChatUserInfo(data);
   }, [userInfo]);
 
   return chatUserInfo ? (
