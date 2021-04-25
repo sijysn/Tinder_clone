@@ -87,7 +87,11 @@ function MessageScreen() {
 
   return (
     <Box>
-      {messages.length > 0 ? (
+      <MessageHeader chatUserInfo={chatUserInfo && chatUserInfo} />
+
+      {loading ? (
+        <Loader style={{ marginTop: "50vh" }} />
+      ) : messages.length > 0 ? (
         messages.map((message) => (
           <Grid
             item
@@ -153,6 +157,7 @@ function MessageScreen() {
       <Box id="latest_message" visibility="hidden">
         latest message
       </Box>
+      <MessageFooter chatUserId={chatUserId} setMessages={setMessages} />
     </Box>
 
     //  <Box>
