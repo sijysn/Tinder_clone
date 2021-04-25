@@ -41,8 +41,10 @@ const SwipeableCard = ({ person, className, cardIsEmpty }) => {
     },
   };
 
-  const readMore = () => {
+  const readMore = (e) => {
+    e.preventDefault();
     if (isBlocked) return;
+    e.stopPropagation();
 
     if (!selfIntroIsDisplayed) {
       setSelfIntroIsDisplayed(true);
@@ -51,11 +53,11 @@ const SwipeableCard = ({ person, className, cardIsEmpty }) => {
   };
 
   const readLess = (e) => {
-    if (isBlocked) return;
-
+    e.preventDefault();
     if (selfIntroIsDisplayed) {
       setSelfIntroIsDisplayed(false);
       e.stopPropagation();
+      dispatch(offBlock());
     }
   };
 
@@ -63,6 +65,8 @@ const SwipeableCard = ({ person, className, cardIsEmpty }) => {
   const [nextUser, setNextUser] = useState();
   const [like, setLike] = useState();
   const [nope, setNope] = useState();
+  const [readMoreArea, setReadMoreArea] = useState();
+  const [readLessArea, setReadLessArea] = useState();
 
   var startX;
   var startY;
@@ -71,8 +75,10 @@ const SwipeableCard = ({ person, className, cardIsEmpty }) => {
   var distanceX;
   var distanceY;
 
-  const mdown = useCallback(
+  const swipeStart = useCallback(
     (e) => {
+      e.preventDefault();
+
       dispatch(onBlock());
 
       // Add class "drag" to card
@@ -90,20 +96,19 @@ const SwipeableCard = ({ person, className, cardIsEmpty }) => {
       startY = event.pageY;
 
       // Occur when card moves
-      document.body.addEventListener("mousemove", mmove, false);
-      document.body.addEventListener("touchmove", mmove, false);
+      swipedUser.addEventListener("mousemove", swipeMove, false);
+      swipedUser.addEventListener("touchmove", swipeMove, false);
     },
     [dispatch, swipedUser]
   );
 
-  const mmove = useCallback(
+  const swipeMove = useCallback(
     (e) => {
+      if (isBlocked) return;
+
       // Normalize mouse and touch
-      if (e.type === "mousemove") {
-        var event = e;
-      } else {
-        var event = e.changedTouches[0];
-      }
+      if (e.type === "mousemove") var event = e;
+      else var event = e.changedTouches[0];
 
       // Move card to where mouse is
       moveY = event.pageY;
@@ -120,28 +125,32 @@ const SwipeableCard = ({ person, className, cardIsEmpty }) => {
       swipedUser.style.transform = `rotate(${rotate}deg)`;
 
       // Display card more clearly as distanceX gets longer
-      if (distanceX >= 0) {
-        like.style.opacity = distanceX / 100;
-      } else {
-        nope.style.opacity = -distanceX / 100;
-      }
+      if (distanceX >= 0) like.style.opacity = distanceX / 100;
+      else nope.style.opacity = -distanceX / 100;
 
       // Occur when mouse or touch is left
-      swipedUser.addEventListener("mouseup", mup, false);
-      document.body.addEventListener("mouseleave", mup, false);
-      swipedUser.addEventListener("touchend", mup, false);
-      document.body.addEventListener("touchleave", mup, false);
+      swipedUser.addEventListener("mouseup", swipeEnd, false);
+      swipedUser.addEventListener("touchend", swipeEnd, false);
     },
     [swipedUser, like, nope]
   );
 
-  const mup = useCallback(async () => {
+  const swipeEnd = useCallback(async () => {
     if (Math.abs(distanceX) < 75 && Math.abs(distanceY) < 75) {
       swipedUser.style.left = 0;
       swipedUser.style.top = 0;
       swipedUser.style.transform = "rotate(0)";
       like.style.opacity = 0;
       nope.style.opacity = 0;
+
+      // Delete event listeners
+      swipedUser.removeEventListener("mousemove", swipeMove, false);
+      swipedUser.removeEventListener("mouseup", swipeEnd, false);
+      swipedUser.removeEventListener("touchmove", swipeMove, false);
+      swipedUser.removeEventListener("touchend", swipeEnd, false);
+
+      // Delete class "drag"
+      swipedUser.classList.remove("drag");
 
       dispatch(offBlock());
     } else {
@@ -161,12 +170,11 @@ const SwipeableCard = ({ person, className, cardIsEmpty }) => {
         likeOrNope = "nope";
       }
 
-      // Delete event listers
-
-      document.body.removeEventListener("mousemove", mmove, false);
-      swipedUser.removeEventListener("mouseup", mup, false);
-      document.body.removeEventListener("touchmove", mmove, false);
-      swipedUser.removeEventListener("touchend", mup, false);
+      // Delete event listeners
+      swipedUser.removeEventListener("mousemove", swipeMove, false);
+      swipedUser.removeEventListener("mouseup", swipeEnd, false);
+      swipedUser.removeEventListener("touchmove", swipeMove, false);
+      swipedUser.removeEventListener("touchend", swipeEnd, false);
 
       // Delete class "drag"
       swipedUser.classList.remove("drag");
@@ -186,17 +194,14 @@ const SwipeableCard = ({ person, className, cardIsEmpty }) => {
       );
 
       // If match, create chat room and register chat room users
-      if (likeOrNope === "like") {
+      if (likeOrNope === "like")
         createChatRoom(userInfo.id, swipedUser.id, config);
-      }
 
       // If all Cards have been swiped, show Empty component
       if (nextUser === null) {
         setTimeout(() => cardIsEmpty(), 200);
         dispatch(onBlock());
-      } else {
-        setTimeout(() => dispatch(offBlock()), 500);
-      }
+      } else setTimeout(() => dispatch(offBlock()), 500);
     }
   }, [dispatch, swipedUser]);
 
@@ -208,31 +213,69 @@ const SwipeableCard = ({ person, className, cardIsEmpty }) => {
       document.getElementById(person.id).firstChild.nextElementSibling
         .nextElementSibling
     );
+    setReadMoreArea(document.getElementById(`read-more${person.id}`));
+    setReadLessArea(document.getElementById(`read-less${person.id}`));
   }, []);
+
+  useEffect(() => {
+    // first rendering
+    if (!swipedUser) return;
+
+    swipedUser.addEventListener("mousedown", swipeStart, false);
+    swipedUser.addEventListener("touchstart", swipeStart, false);
+  }, [swipedUser, readMoreArea, readLessArea]);
+
+  useEffect(() => {
+    // first rendering
+    if (!readMoreArea) return;
+
+    readMoreArea.addEventListener("mousedown", readMore, false);
+    readMoreArea.addEventListener("touchstart", readMore, false);
+  }, [readMoreArea, readMore]);
+
+  useEffect(() => {
+    // first rendering
+    if (!readLessArea) return;
+    readLessArea.addEventListener("mousedown", readLess, false);
+    readLessArea.addEventListener("touchstart", readLess, false);
+  }, [readLessArea, readLess]);
 
   useEffect(() => {
     if (!swipedUser) return;
 
-    // When self introduction is displayed, not allow user to swipe
-    if (selfIntroIsDisplayed) {
-      document.body.removeEventListener("mousemove", mmove, false);
-      document.body.removeEventListener("touchmove", mmove, false);
-      document.body.removeEventListener("mouseleave", mup, false);
-      document.body.removeEventListener("touchleave", mup, false);
-    }
-
-    // When blocked, delete event
+    // When blocked, do not allow user to swipe
     if (isBlocked) {
-      swipedUser.removeEventListener("mousedown", mdown, false);
-      swipedUser.removeEventListener("touchstart", mdown, false);
+      swipedUser.removeEventListener("mousedown", swipeStart, false);
+      swipedUser.removeEventListener("touchstart", swipeStart, false);
+    } else {
+      swipedUser.addEventListener("mousedown", swipeStart, false);
+      swipedUser.addEventListener("touchstart", swipeStart, false);
     }
+  }, [swipedUser, isBlocked]);
 
-    // When not blocked and self introduction is not displayed, allow user to swipe
-    if (!isBlocked && !selfIntroIsDisplayed) {
-      swipedUser.addEventListener("mousedown", mdown, false);
-      swipedUser.addEventListener("touchstart", mdown, false);
+  useEffect(() => {
+    if (!swipedUser) return;
+
+    // When self introduction is displayed, do not allow user to swipe
+    if (selfIntroIsDisplayed && readMoreArea) {
+      swipedUser.removeEventListener("mousedown", swipeStart, false);
+      swipedUser.removeEventListener("touchstart", swipeStart, false);
+      readMoreArea.removeEventListener("mousedown", readMore, false);
+      readMoreArea.removeEventListener("touchstart", readMore, false);
+    } else if (!selfIntroIsDisplayed && readLessArea) {
+      swipedUser.addEventListener("mousedown", swipeStart, false);
+      swipedUser.addEventListener("touchstart", swipeStart, false);
+      readLessArea.removeEventListener("mousedown", readLess, false);
+      readLessArea.removeEventListener("touchstart", readLess, false);
     }
-  }, [swipedUser, isBlocked, selfIntroIsDisplayed, mdown, mmove, mdown]);
+  }, [
+    swipedUser,
+    selfIntroIsDisplayed,
+    readLessArea,
+    readMoreArea,
+    readLess,
+    readMore,
+  ]);
 
   return (
     <Card className={className} id={person.id}>
@@ -248,7 +291,10 @@ const SwipeableCard = ({ person, className, cardIsEmpty }) => {
         NOPE
       </Typography>
 
-      <CardActionArea onClick={readMore}>
+      <CardActionArea
+        // onClick={(e) => readMore(e)}
+        id={`read-more${person.id}`}
+      >
         <CardContent className={classes.cardContent}>
           <Typography component="h1" variant="h3" gutterBottom>
             <strong>{person.first_name}</strong>{" "}
@@ -268,26 +314,34 @@ const SwipeableCard = ({ person, className, cardIsEmpty }) => {
 
             <Grid item xs={6}>
               <Box textAlign="right">
-                {selfIntroIsDisplayed ? (
-                  <IconButton
-                    style={{
-                      backgroundColor: "#f50057",
-                    }}
-                    component="span"
-                    onClick={(e) => readLess(e)}
-                  >
-                    <ArrowDownwardIcon
+                <Box
+                  minWidth={0}
+                  minHeight={0}
+                  id={`read-less${person.id}`}
+                  component="span"
+                  display="inline-block"
+                >
+                  {selfIntroIsDisplayed ? (
+                    <IconButton
                       style={{
-                        color: "#fff",
+                        backgroundColor: "#f50057",
                       }}
-                      fontSize="large"
-                    />
-                  </IconButton>
-                ) : (
-                  <IconButton component="span">
-                    <InfoIcon fontSize="large" />
-                  </IconButton>
-                )}
+                      component="span"
+                      // onClick={(e) => readLess(e)}
+                    >
+                      <ArrowDownwardIcon
+                        style={{
+                          color: "#fff",
+                        }}
+                        fontSize="large"
+                      />
+                    </IconButton>
+                  ) : (
+                    <IconButton component="span">
+                      <InfoIcon fontSize="large" />
+                    </IconButton>
+                  )}
+                </Box>
               </Box>
             </Grid>
           </Grid>

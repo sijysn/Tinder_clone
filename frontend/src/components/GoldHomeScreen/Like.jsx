@@ -11,9 +11,15 @@ function Like({ image }) {
       <CardActionArea style={{ position: "relative" }}>
         <CardMedia
           image={image ? image : "unknown_ffqtxf"}
-          style={{ width: "100%", height: "60vw", filter: "blur(10px)" }}
+          style={{
+            width: "50vw",
+            maxWidth: "384px",
+            height: "60vw",
+            maxHeight: "460.8px",
+            filter: "blur(10px)",
+          }}
           title="Profile Photo"
-        ></CardMedia>
+        />
         <Box
           component="h3"
           position="absolute"
