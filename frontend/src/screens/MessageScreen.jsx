@@ -56,17 +56,19 @@ function MessageScreen() {
     setMessages(_messages.data);
     readMessageBy(_messages.data, userInfo);
 
-    if (scrollBottomRef && scrollBottomRef.current)
-      scrollBottomRef.current.scrollIntoView();
-
     setLoading(false);
   }, [history, userInfo, chatUserInfo]);
+
+  useEffect(() => {
+    if (scrollBottomRef && scrollBottomRef.current)
+      scrollBottomRef.current.scrollIntoView();
+  }, [loading]);
 
   useEffect(() => {
     let isMounted = true;
 
     const checkMessage = async () => {
-      const _messages = await getMessagesBy(userInfo.id, chatUserId);
+      const _messages = await getMessagesBy(userInfo, chatUserId);
 
       setMessages(_messages.data);
 
@@ -75,7 +77,6 @@ function MessageScreen() {
 
     const repeat = () => {
       checkMessage();
-      setLoading(false);
       if (isMounted) setTimeout(repeat, 5000);
     };
 
