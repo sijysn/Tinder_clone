@@ -13,7 +13,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 
 import { useStyles } from "../styles/styles.js";
 
-import calcAge from "../functions/calcAge";
+import calcAge from "../repositories/calcAge";
 
 function PreviewCard({ person, className }) {
   const classes = useStyles();

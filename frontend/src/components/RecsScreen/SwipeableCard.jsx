@@ -16,8 +16,8 @@ import CardMedia from "@material-ui/core/CardMedia";
 
 import { useStyles } from "../../styles/styles.js";
 
-import calcAge from "../../functions/calcAge";
-import createChatRoom from "../../functions/createChatRoom";
+import calcAge from "../../repositories/calcAge";
+import createChatRoom from "../../repositories/createChatRoom";
 
 import { onBlock, offBlock } from "../../actions/blockActions";
 

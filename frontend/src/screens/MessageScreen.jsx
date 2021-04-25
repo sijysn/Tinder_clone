@@ -1,22 +1,18 @@
-import React, { useState, useEffect, useRef, useLayoutEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import Box from "@material-ui/core/Box";
-import Grid from "@material-ui/core/Grid";
-import Avatar from "@material-ui/core/Avatar";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 
 import MessageHeader from "../components/MessageScreen/MessageHeader";
+import MessageHistory from "../components/MessageScreen/MessageHistory";
 import MessageFooter from "../components/MessageScreen/MessageFooter";
-import MessageBubble from "../components/MessageScreen/MessageBubble";
 import Loader from "../components/Loader";
 
 import getChatUserInfoBy from "../repositories/getChatUserInfoBy";
 import updateMessageGoodBy from "../repositories/updateMessageGoodBy";
 import getMessagesBy from "../repositories/getMessagesBy";
-import readMessageBy from "../repositories/readMessageBy";
+import readMessagesBy from "../repositories/readMessagesBy";
 
 function MessageScreen() {
   const history = useHistory();
@@ -43,7 +39,6 @@ function MessageScreen() {
   const scrollBottomRef = useRef(null);
 
   useEffect(async () => {
-    // TODO Routerでやる。
     if (!userInfo) history.push("/login");
 
     if (!chatUserInfo)
@@ -54,7 +49,8 @@ function MessageScreen() {
     const _messages = await getMessagesBy(userInfo, chatUserId);
 
     setMessages(_messages.data);
-    readMessageBy(_messages.data, userInfo);
+
+    readMessagesBy(_messages.data, userInfo);
 
     setLoading(false);
   }, [history, userInfo, chatUserInfo]);
@@ -64,19 +60,19 @@ function MessageScreen() {
       scrollBottomRef.current.scrollIntoView();
   }, [loading]);
 
-  useEffect(() => {
+  useEffect(async () => {
     let isMounted = true;
 
-    const checkMessage = async () => {
+    const reloadMessages = async () => {
       const _messages = await getMessagesBy(userInfo, chatUserId);
 
       setMessages(_messages.data);
 
-      readMessageBy(_messages.data, userInfo);
+      readMessagesBy(_messages.data, userInfo);
     };
 
-    const repeat = () => {
-      checkMessage();
+    const repeat = async () => {
+      reloadMessages();
       if (isMounted) setTimeout(repeat, 5000);
     };
 
@@ -92,92 +88,13 @@ function MessageScreen() {
       {loading ? (
         <Loader style={{ marginTop: "50vh" }} />
       ) : (
-        <Grid
-          container
-          direction="column"
-          spacing={1}
-          style={{
-            overflowY: "scroll",
-            maxHeight: "100vh",
-            padding: "9rem 1rem 20rem",
-            flexWrap: "nowrap",
-            zIndex: "-1",
-          }}
-          className="max-width"
-        >
-          {messages.length > 0 &&
-            messages.map((message, index) => (
-              <Grid container item key={message.id}>
-                <Grid
-                  item
-                  style={{
-                    position: "relative",
-                    width: "100%",
-                  }}
-                >
-                  {message.user_id == chatUserId ? (
-                    <Box display="flex" justifyContent="flex-start" mr={5}>
-                      <Avatar
-                        src={
-                          chatUserInfo ? chatUserInfo.image : "unknown_ffqtxf"
-                        }
-                        alt="Profile Photo"
-                        style={{
-                          height: "3rem",
-                          width: "3rem",
-                          marginRight: "1rem",
-                        }}
-                      ></Avatar>
-
-                      <MessageBubble
-                        bgColor="#dddddd"
-                        color="#000"
-                        text={message.text}
-                      />
-
-                      <Box
-                        position="absolute"
-                        right="1rem"
-                        top="50%"
-                        style={{ transform: "translateY(-50%)" }}
-                      >
-                        {message.good ? (
-                          <FavoriteIcon
-                            onClick={() => goodHandler(message)}
-                            style={{ color: "#f50057" }}
-                          />
-                        ) : (
-                          <FavoriteBorderIcon
-                            onClick={() => goodHandler(message)}
-                          />
-                        )}
-                      </Box>
-                    </Box>
-                  ) : (
-                    <Box display="flex" justifyContent="flex-end" ml={5}>
-                      {message.good && (
-                        <FavoriteIcon
-                          fontSize="small"
-                          style={{ color: "#f50057" }}
-                        />
-                      )}
-
-                      <MessageBubble
-                        bgColor="#46b3e6"
-                        color="#fff"
-                        text={message.text}
-                      />
-                    </Box>
-                  )}
-                </Grid>
-                {index + 1 == messages.length && (
-                  <Box ref={scrollBottomRef} visibility="hidden">
-                    latest message
-                  </Box>
-                )}
-              </Grid>
-            ))}
-        </Grid>
+        <MessageHistory
+          messages={messages}
+          chatUserId={chatUserId}
+          chatUserInfo={chatUserInfo}
+          scrollBottomRef={scrollBottomRef}
+          onClick={goodHandler}
+        />
       )}
 
       <MessageFooter

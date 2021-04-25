@@ -20,7 +20,7 @@ import CommonHeader from "../components/CommonHeader";
 import ProfileButton from "../components/ProfileScreen/ProfileButton";
 import Loader from "../components/Loader";
 
-import calcAge from "../functions/calcAge";
+import calcAge from "../repositories/calcAge";
 
 import { getUserDetails } from "../actions/userActions";
 

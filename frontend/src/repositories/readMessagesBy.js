@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default async function readMessageBy(messages, userInfo) {
+export default async function readMessagesBy(messages, userInfo) {
   const config = {
     headers: {
       "content-type": "application/json",

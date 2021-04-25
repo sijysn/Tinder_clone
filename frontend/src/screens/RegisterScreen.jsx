@@ -18,7 +18,7 @@ import Alert from "@material-ui/lab/Alert";
 
 import Loader from "../components/Loader";
 
-import calcAge from "../functions/calcAge";
+import calcAge from "../repositories/calcAge";
 
 import { register } from "../actions/userActions";
 

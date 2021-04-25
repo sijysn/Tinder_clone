@@ -13,7 +13,7 @@ import FlashOnIcon from "@material-ui/icons/FlashOn";
 
 import { onBlock, offBlock } from "../../actions/blockActions";
 
-import createChatRoom from "../../functions/createChatRoom";
+import createChatRoom from "../../repositories/createChatRoom";
 
 const SwipeButtons = ({ cardIsEmpty }) => {
   const dispatch = useDispatch();
