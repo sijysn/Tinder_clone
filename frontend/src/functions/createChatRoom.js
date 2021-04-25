@@ -6,8 +6,8 @@ const createChatRoom = async (userId, swipedUserId, config) => {
     config
   );
 
-  if (reaction.data.status === "L") {
-    const { data } = await axios.post(
+  if (reaction.data.status === "L")
+    await axios.post(
       "/api/chatroomusers/register/",
       {
         user1Id: userId,
@@ -15,7 +15,6 @@ const createChatRoom = async (userId, swipedUserId, config) => {
       },
       config
     );
-  }
 };
 
 export default createChatRoom;

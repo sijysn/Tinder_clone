@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default async function taggleLikeMessageBy(messageId, userInfo) {
+export default async function updateMessageGoodBy(messageId, userInfo) {
   const config = {
     headers: {
       "content-type": "application/json",

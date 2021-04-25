@@ -13,7 +13,7 @@ import EmojiEmotionsIcon from "@material-ui/icons/EmojiEmotions";
 import GifIcon from "@material-ui/icons/Gif";
 import MusicNoteIcon from "@material-ui/icons/MusicNote";
 
-function MessageFooter({ chatUserId, setMessages }) {
+function MessageFooter({ chatUserId, setMessages, scrollBottomRef }) {
   const [text, setText] = useState("");
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -41,6 +41,8 @@ function MessageFooter({ chatUserId, setMessages }) {
 
     setMessages(data);
     setText("");
+
+    scrollBottomRef.current.scrollIntoView();
   };
 
   return (

@@ -49,7 +49,7 @@ function LatestMessage({ item }) {
   }, [userInfo]);
 
   return chatUserInfo ? (
-    <HashLink to={`/messages/${chatUserInfo.id}#latest_message`}>
+    <HashLink to={`/messages/${chatUserInfo.id}`}>
       <Box
         display="flex"
         flexDirection="row"
