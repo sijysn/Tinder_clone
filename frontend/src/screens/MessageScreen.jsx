@@ -86,9 +86,56 @@ function MessageScreen() {
   // }, []);
 
   return (
-    <Typography>{`-----------------${
-      messages.length > 0 ? messages[0].id : "EEEEEEEE"
-    }`}</Typography>
+    messages.length > 0 &&
+    messages.map((message) => (
+      <Grid
+        item
+        key={message.id}
+        style={{
+          position: "relative",
+          width: "100%",
+        }}
+      >
+        {message.user_id == chatUserId ? (
+          <Box display="flex" justifyContent="flex-start" mr={5}>
+            <Avatar
+              src={chatUserInfo ? chatUserInfo.image : "unknown_ffqtxf"}
+              alt="Profile Photo"
+              style={{
+                height: "3rem",
+                width: "3rem",
+                marginRight: "1rem",
+              }}
+            ></Avatar>
+
+            <MessageBubble bgColor="#dddddd" color="#000" text={message.text} />
+
+            <Box
+              position="absolute"
+              right="1rem"
+              top="50%"
+              style={{ transform: "translateY(-50%)" }}
+            >
+              {message.good ? (
+                <FavoriteIcon
+                  onClick={() => goodHandler(message)}
+                  style={{ color: "#f50057" }}
+                />
+              ) : (
+                <FavoriteBorderIcon onClick={() => goodHandler(message)} />
+              )}
+            </Box>
+          </Box>
+        ) : (
+          <Box display="flex" justifyContent="flex-end" ml={5}>
+            {message.good && (
+              <FavoriteIcon fontSize="small" style={{ color: "#f50057" }} />
+            )}
+            <MessageBubble bgColor="#46b3e6" color="#fff" text={message.text} />
+          </Box>
+        )}
+      </Grid>
+    ))
     //  <Box>
     //   {loading ? (
     //     <Loader style={{ marginTop: "50vh" }} />
