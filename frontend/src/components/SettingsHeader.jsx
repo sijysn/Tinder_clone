@@ -9,9 +9,10 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(1),
+  settingsHeader: {
+    marginTop: theme.spacing(2),
   },
+
   done: {
     textAlign: "center",
     color: "#FF5864",
@@ -22,7 +23,7 @@ function SettingsHeader({ title, backTo }) {
   const classes = useStyles();
 
   return (
-    <Container className={classes.paper}>
+    <Container className={classes.settingsHeader}>
       <CssBaseline />
       <Grid
         container

@@ -11,7 +11,11 @@ function ChatUserBubble({ message, chatUserInfo, onClick }) {
   return (
     <Box display="flex" justifyContent="flex-start" mr={8}>
       <Avatar
-        src={chatUserInfo ? chatUserInfo.image : "unknown_ffqtxf"}
+        src={
+          chatUserInfo
+            ? chatUserInfo.image
+            : "https://res.cloudinary.com/dfw3mlaic/image/upload/v1/images/unknown_ffqtxf"
+        }
         alt="Profile Photo"
         style={{
           height: "3rem",

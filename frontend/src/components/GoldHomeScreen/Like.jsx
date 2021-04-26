@@ -10,7 +10,11 @@ function Like({ image }) {
     <Card style={{ width: "100%", borderRadius: "10px" }}>
       <CardActionArea style={{ position: "relative" }}>
         <CardMedia
-          image={image ? image : "unknown_ffqtxf"}
+          image={
+            image
+              ? image
+              : "https://res.cloudinary.com/dfw3mlaic/image/upload/v1/images/unknown_ffqtxf"
+          }
           style={{
             width: "50vw",
             maxWidth: "384px",

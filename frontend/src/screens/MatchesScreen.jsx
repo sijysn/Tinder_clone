@@ -10,7 +10,7 @@ import CommonHeader from "../components/CommonHeader";
 import NewMatches from "../components/MatchesScreen/NewMatches";
 import LatestMessages from "../components/MatchesScreen/LatestMessages";
 
-import { useStyles } from "../styles/styles.js";
+import useStyles from "../styles/styles.js";
 
 function MatchesScreen() {
   const history = useHistory();

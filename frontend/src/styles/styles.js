@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-export const useStyles = makeStyles((theme) => ({
-  paper: {
+const useStyles = makeStyles((theme) => ({
+  formContainer: {
     marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
@@ -14,7 +14,7 @@ export const useStyles = makeStyles((theme) => ({
     overflowY: "scroll",
     flexWrap: "nowrap",
     maxHeight: "100vh",
-    paddingBottom: "10rem",
+    paddingBottom: "20rem",
   },
 
   settingsForm: {
@@ -73,10 +73,6 @@ export const useStyles = makeStyles((theme) => ({
     paddingBottom: "10rem",
   },
 
-  registerScreen: {
-    overflowY: "scroll !important",
-  },
-
   // MessageHeader
 
   messageHeader: {
@@ -96,3 +92,5 @@ export const useStyles = makeStyles((theme) => ({
     width: "5rem !important",
   },
 }));
+
+export default useStyles;

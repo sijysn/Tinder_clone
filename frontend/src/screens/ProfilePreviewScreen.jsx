@@ -26,11 +26,9 @@ function ProfilePreviewScreen() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!userInfo) {
-      history.push("/login");
-    } else if (!user) {
-      dispatch(getUserDetails());
-    }
+    if (!userInfo) history.push("/login");
+
+    if (!user) dispatch(getUserDetails());
   }, [dispatch, history, userInfo, user]);
 
   return (
@@ -45,6 +43,7 @@ function ProfilePreviewScreen() {
       ) : error ? (
         <Alert severity="error">{error}</Alert>
       ) : (
+        userInfo &&
         user && (
           <PreviewCard person={user} className="card__preview"></PreviewCard>
         )

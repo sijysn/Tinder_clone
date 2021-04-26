@@ -85,23 +85,26 @@ function MessageScreen() {
     <Box>
       <MessageHeader chatUserInfo={chatUserInfo && chatUserInfo} />
 
-      {loading ? (
-        <Loader style={{ marginTop: "50vh" }} />
-      ) : (
-        <MessageHistory
-          messages={messages}
-          chatUserId={chatUserId}
-          chatUserInfo={chatUserInfo}
-          scrollBottomRef={scrollBottomRef}
-          onClick={goodHandler}
-        />
+      {userInfo && (
+        <Box>
+          {loading ? (
+            <Loader style={{ marginTop: "50vh" }} />
+          ) : (
+            <MessageHistory
+              messages={messages}
+              chatUserId={chatUserId}
+              chatUserInfo={chatUserInfo}
+              scrollBottomRef={scrollBottomRef}
+              onClick={goodHandler}
+            />
+          )}
+          <MessageFooter
+            chatUserId={chatUserId}
+            setMessages={setMessages}
+            scrollBottomRef={scrollBottomRef}
+          />{" "}
+        </Box>
       )}
-
-      <MessageFooter
-        chatUserId={chatUserId}
-        setMessages={setMessages}
-        scrollBottomRef={scrollBottomRef}
-      />
     </Box>
   );
 }

@@ -17,7 +17,7 @@ import Loader from "../Loader";
 import { USER_DETAILS_SUCCESS } from "../../constants/userConstants";
 
 function ProfilePhotoUploader() {
-  const [image, setImage] = useState("unknown_ffqtxf");
+  const [image, setImage] = useState("");
   const [message, setMessage] = useState();
   const [uploading, setUploading] = useState(false);
 
@@ -73,7 +73,11 @@ function ProfilePhotoUploader() {
         <Loader />
       ) : (
         <CardMedia
-          image={image ? image : "unknown_ffqtxf"}
+          image={
+            image
+              ? image
+              : "https://res.cloudinary.com/dfw3mlaic/image/upload/v1/images/unknown_ffqtxf"
+          }
           title="Profile Photo"
           style={{
             position: "relative",

@@ -14,7 +14,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 
-import { useStyles } from "../../styles/styles.js";
+import useStyles from "../../styles/styles.js";
 
 import calcAge from "../../repositories/calcAge";
 import createChatRoom from "../../repositories/createChatRoom";
@@ -280,7 +280,11 @@ const SwipeableCard = ({ person, className, cardIsEmpty }) => {
   return (
     <Card className={className} id={person.id}>
       <CardMedia
-        image={person.image ? person.image : "unknown_ffqtxf"}
+        image={
+          person.image
+            ? person.image
+            : "https://res.cloudinary.com/dfw3mlaic/image/upload/v1/images/unknown_ffqtxf"
+        }
         className={classes.cardImage}
         title="profile photo"
       />
@@ -291,10 +295,7 @@ const SwipeableCard = ({ person, className, cardIsEmpty }) => {
         NOPE
       </Typography>
 
-      <CardActionArea
-        // onClick={(e) => readMore(e)}
-        id={`read-more${person.id}`}
-      >
+      <CardActionArea id={`read-more${person.id}`}>
         <CardContent className={classes.cardContent}>
           <Typography component="h1" variant="h3" gutterBottom>
             <strong>{person.first_name}</strong>{" "}
@@ -327,7 +328,6 @@ const SwipeableCard = ({ person, className, cardIsEmpty }) => {
                         backgroundColor: "#f50057",
                       }}
                       component="span"
-                      // onClick={(e) => readLess(e)}
                     >
                       <ArrowDownwardIcon
                         style={{
