@@ -20,26 +20,6 @@ def getReactions(request, from_user_id):
   return Response(serializer.data)
 
 
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def getReaction(request, from_user_id, to_user_id):
-  reactions = Reaction.objects.filter(to_user_id=to_user_id)
-
-  is_reacted = False
-
-  for reaction in reactions:
-    if reaction.from_user_id.id == from_user_id:
-      is_reacted = True
-      break
-
-  if is_reacted:
-    reaction = Reaction.objects.get(from_user_id=from_user_id, to_user_id=to_user_id)
-    serializer = ReactionSerializer(reaction, many=False)
-    return Response(serializer.data)
-  else:
-    return Response({})
-
-
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def swipeCard(request):

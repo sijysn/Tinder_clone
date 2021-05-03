@@ -13,6 +13,10 @@ import Loader from "../components/Loader";
 
 import useStyles from "../styles/styles.js";
 
+import calcAge from "../repositories/calcAge";
+
+import { register } from "../actions/userActions";
+
 export default function RegisterScreen() {
   const history = useHistory();
   const location = useLocation();

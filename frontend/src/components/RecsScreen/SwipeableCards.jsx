@@ -1,55 +1,45 @@
-import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useState, useEffect, forwardRef } from "react";
+import { useSelector } from "react-redux";
 
 import Box from "@material-ui/core/Box";
-import Alert from "@material-ui/lab/Alert";
 
 import SwipeableCard from "./SwipeableCard";
-import Empty from "./Empty";
 
-import { listCards } from "../../actions/userActions";
+const SwipeableCards = forwardRef(
+  ({ onTouchStart, onTouchMove, onTouchEnd }, ref) => {
+    const [creatingRef, setCreatingRef] = useState(true);
 
-const SwipeableCards = ({ cardIsEmpty }) => {
-  const dispatch = useDispatch();
+    const cardList = useSelector((state) => state.cardList);
+    const { cards } = cardList;
 
-  const cardList = useSelector((state) => state.cardList);
-  const { loading, error, cards } = cardList;
+    useEffect(() => {
+      if (!ref) return;
 
-  const userLogin = useSelector((state) => state.userLogin);
-  const { userInfo } = userLogin;
+      cards.map((_, index) => (ref.current[index] = React.createRef(null)));
 
-  useEffect(() => {
-    if (userInfo) {
-      dispatch(listCards());
-    }
-  }, [dispatch, userInfo]);
+      setCreatingRef(false);
+    }, [cards, ref]);
 
-  useEffect(() => {
-    if (loading === false && cards && cards.length === 0) cardIsEmpty();
-  }, [cards, cardIsEmpty]);
-
-  return (
-    <Box>
-      {loading ? (
-        <Empty />
-      ) : error ? (
-        <Alert severity="error">{error}</Alert>
-      ) : (
-        cards && (
+    return (
+      <Box>
+        {!creatingRef && (
           <Box className="cards">
-            {cards.map((person) => (
+            {cards.map((person, index) => (
               <SwipeableCard
-                person={person}
-                className="card"
                 key={person.id}
-                cardIsEmpty={cardIsEmpty}
+                person={person}
+                onTouchStart={onTouchStart}
+                onTouchMove={onTouchMove}
+                onTouchEnd={onTouchEnd}
+                index={index}
+                ref={ref.current[index]}
               />
             ))}
           </Box>
-        )
-      )}
-    </Box>
-  );
-};
+        )}
+      </Box>
+    );
+  }
+);
 
 export default SwipeableCards;

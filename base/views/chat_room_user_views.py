@@ -15,25 +15,35 @@ from base.serializers import ChatRoomUserSerializer
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def registerChatRoomUser(request):
-
   data = request.data
-  user1 = User.objects.get(id=data['user1Id']) 
-  user2 = User.objects.get(id=data['user2Id'])
+  from_user = User.objects.get(id=data['fromUserId']) 
+  to_user = User.objects.get(id=data['toUserId'])
   new_chat_room_users = []
 
-  chat_room = ChatRoom.objects.create()
 
-  chat_room_user1 = ChatRoomUser.objects.create(
-    chat_room_id=chat_room,
-    user_id=user1,
-  )
-  new_chat_room_users.append(chat_room_user1)
+  try:
+    reaction = Reaction.objects.get(from_user_id=from_user, to_user_id=to_user)
 
-  chat_room_user2 = ChatRoomUser.objects.create(
-    chat_room_id=chat_room,
-    user_id=user2,
-  )
-  new_chat_room_users.append(chat_room_user2)
+    if reaction.status == "L":
+      chat_room = ChatRoom.objects.create()
 
-  serializer = ChatRoomUserSerializer(new_chat_room_users, many=True)
-  return Response(serializer.data)
+      chat_room_user1 = ChatRoomUser.objects.create(
+        chat_room_id=chat_room,
+        user_id=from_user,
+      )
+      new_chat_room_users.append(chat_room_user1)
+
+      chat_room_user2 = ChatRoomUser.objects.create(
+        chat_room_id=chat_room,
+        user_id=to_user,
+      )
+      new_chat_room_users.append(chat_room_user2)
+
+      serializer = ChatRoomUserSerializer(new_chat_room_users, many=True)
+      return Response(serializer.data)
+
+    else:
+      return Response([])
+
+  except:
+    return Response([])
