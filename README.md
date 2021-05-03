@@ -55,6 +55,7 @@ https://tinder.com/
 - react-dom (17.0.2)
 - react-router-dom (5.2.0)
 - react-router-hash-link (2.4.0)
+- react-draggable (4.4.3)
 - redux (4.0.5)
 - react-redux (7.2.3)
 - redux-devtools-extension (2.13.9)
@@ -64,7 +65,7 @@ https://tinder.com/
 - @material-ui/lab (4.0.0-alpha.57)
 - axios (0.21.1)
 　
-# Usage
+# Usage(Local環境)
 
 1. Tinder_clone をダウンロードする
 ```shell
