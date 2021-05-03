@@ -69,7 +69,7 @@ https://tinder.com/
 
 1. Tinder_clone をダウンロードする
 ```shell
-$ git clone https://github.com/sijysn/Tinder_clone_demo.git
+$ git clone https://github.com/sijysn/Tinder_clone.git
 $ cd Tinder_clone
 ```
 　  
