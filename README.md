@@ -127,10 +127,7 @@ frontend $ npm start
 
 今後やるべきこと
 
-- メッセージ送信時の画面のズレを改善する
-- クリックロック時のスワイプを無効にする
 - スタイルの統一（style props, CSS, Material-UI の makeStyles など）
-- WebAPI の通信回数を減らす
 - テストを書く　<br>
 　
 # Author
